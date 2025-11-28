@@ -2,7 +2,7 @@
   <br>
   <div class="product-detail" v-if="productExists">
     <div class="product-image">
-      <img :src="product.image" :alt="product.name" />
+      <img :src="productImageUrl" :alt="product.name" />
     </div>
     <div class="product-info">
       <h2>{{ product.name }}</h2>
@@ -38,11 +38,33 @@ export default {
     },
     productExists() {
       return !!this.product;
+    },
+    productImageUrl() {
+      // If no product or image, return placeholder or empty
+      if (!this.product || !this.product.image) {
+        return require('../assets/404.jpg'); // Fallback
+      }
+
+      // Check if the database already has a full URL
+      if (this.product.image.startsWith('http')) {
+        return this.product.image;
+      }
+
+      // Get the Base URL from Environment Variables
+      // Default to empty string if not set
+      let baseUrl = process.env.VUE_APP_PRODUCT_SERVICE_URL || '';
+
+      // Clean up slashes to avoid double slashes
+      if (baseUrl.endsWith('/') && this.product.image.startsWith('/')) {
+        baseUrl = baseUrl.slice(0, -1);
+      }
+
+      // Combine them
+      return `${baseUrl}${this.product.image}`;
     }
   },
   methods: {
     addToCart() {
-      // Add the product and quantity to the cart
       this.$emit('addToCart', {
         productId: this.product.id,
         quantity: this.quantity
