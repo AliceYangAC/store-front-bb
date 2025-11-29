@@ -56,7 +56,6 @@
 
 <style scoped>
 .product-carousel-container {
-  padding: 10px;
   max-width: 100%;
 }
 
@@ -64,7 +63,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  padding: 0 10px; 
 }
 
 .carousel-controls {
@@ -94,11 +94,12 @@
 .carousel-track {
   display: flex;
   gap: 20px;
-  align-items: stretch; 
   overflow-x: auto;
+  overflow-y: hidden; 
+  align-items: stretch;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  padding: 10px 5px 30px 5px; 
+  padding: 20px; 
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -108,10 +109,9 @@
 }
 
 .carousel-item {
-  flex: 0 0 auto;
-  width: 300px;
+  flex: 0 0 300px;
+  width: 300px; 
   scroll-snap-align: start;
-  height: auto; 
   display: flex; 
 }
 </style>
