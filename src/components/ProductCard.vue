@@ -4,17 +4,19 @@
     <router-link :to="`/product/${product.id}`">
       <h2>{{ product.name }}</h2>
     </router-link>
-      <p class="description">{{ shortDescription }}</p>
-      <div class="product-details">
-        <div class="product-price">
-          <p class="price">${{ product.price }}</p>
-        </div>
-        <div class="product-controls">
-          <input type="number" v-model="quantity" min="1" class="quantity-input" />
-          <button @click="addToCart">Add to Cart</button>
-        </div>
+    
+    <p class="description">{{ shortDescription }}</p>
+
+    <div class="product-details">
+      <div class="product-price">
+        <p class="price">${{ product.price }}</p>
+      </div>
+      <div class="product-controls">
+        <input type="number" v-model="quantity" min="1" class="quantity-input" />
+        <button @click="addToCart">Add to Cart</button>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -26,18 +28,18 @@ export default {
       quantity: 1
     }
   },
-
   computed: {
+    // 1. Logic to handle image URLs (Backend vs External)
     productImageUrl() {
       // Placeholder check
       if (this.product.image === '/placeholder.png') return this.product.image;
       
-      // Full URL check
-      // if (this.product.image && this.product.image.startsWith('http')) {
-      //   return this.product.image;
-      // }
+      // Full URL check (e.g. Google or AI generated)
+      if (this.product.image && this.product.image.startsWith('http')) {
+        return this.product.image;
+      }
 
-      // Backend Proxy Logic
+      // Backend Proxy Logic (Connects to Port 3002)
       let baseUrl = process.env.VUE_APP_PRODUCT_SERVICE_URL || 'http://localhost:3002';
       
       if (baseUrl.endsWith('/') && this.product.image.startsWith('/')) {
@@ -46,27 +48,27 @@ export default {
       
       return `${baseUrl}${this.product.image}`;
     },
+
+    // 2. Logic to shorten description without cutting off sentences
     shortDescription() {
       const text = this.product.description;
-      const maxLength = 100; // Adjust this number to make cards taller/shorter
+      const maxLength = 100; 
 
-      // If text is short enough, just show it all
+      if (!text) return '';
       if (text.length <= maxLength) return text;
 
-      // Cut the string at the limit
+      // Cut at limit
       let trimmed = text.substr(0, maxLength);
 
-      // Attempt to cut at the last period (.) to keep a full sentence
+      // Try to cut at the last period to keep a full sentence
       const lastPeriod = trimmed.lastIndexOf('.');
-
       if (lastPeriod > 0) {
-        // If we found a period, cut right after it
         return trimmed.substring(0, lastPeriod + 1);
       }
 
-      // Fallback: If the first sentence is huge (no periods found),
-      // just cut at the last space so we don't chop a word in half.
+      // Fallback: Cut at the last space
       return trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
+    }
   },
   methods: {
     incrementQuantity() {
@@ -90,24 +92,24 @@ export default {
 <style scoped>
 .product-card {
   border: 1px solid #ddd;
-  padding: 10px; /* Reduced padding */
+  padding: 10px;
   border-radius: 8px;
   height: 100%;
   display: flex;
   flex-direction: column;
   background: white;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 img {
   width: 100%;
-  height: 140px; 
+  height: 120px;
   object-fit: contain;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 h2 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin: 5px 0;
   line-height: 1.2;
 }
@@ -120,20 +122,26 @@ h2 {
   flex-grow: 1;
 }
 
-.product-controls {
-  display: flex;
-  gap: 5px;
+.product-details {
   margin-top: auto;
 }
 
+.product-controls {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+
 .quantity-input {
-  width: 50px;
+  width: 40px;
   padding: 5px;
+  font-size: 0.9rem;
 }
 
 button {
-  flex: 1; /* Makes button fill remaining space */
-  padding: 8px;
+  flex: 1;
+  padding: 6px;
+  font-size: 0.9rem;
   background-color: #0046be;
   color: white;
   border: none;
