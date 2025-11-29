@@ -1,118 +1,86 @@
 <template>
-  <div class="product-carousel-container">
-    <div class="carousel-header">
+  <div class="product-list-container">
+    <div class="list-header">
       <h2>Featured Products</h2>
-      <div class="carousel-controls">
-        <button @click="scrollLeft" class="nav-btn">&lt;</button>
-        <button @click="scrollRight" class="nav-btn">&gt;</button>
-      </div>
+      <span class="product-count">{{ products.length }} items</span>
     </div>
 
-    <div class="carousel-track" ref="carousel">
-      <div class="carousel-item" v-for="product in products" :key="product.id">
+    <div class="product-grid">
+      <div class="grid-item" v-for="product in products" :key="product.id">
         <ProductCard
           :product="product"
           @addToCart="addToCart"
         />
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
-  import ProductCard from '../components/ProductCard'
+import ProductCard from '../components/ProductCard.vue'
 
-  export default {
-    name: 'ProductList',
-    props: ['products'],
-    components: {
-      ProductCard
-    },
-    methods: {
-      addToCart({ productId, quantity }) {
-        this.$emit('addToCart', {
-          productId: productId,
-          quantity: quantity
-        })
-      },
-      scrollLeft() {
-        this.$refs.carousel.scrollBy({
-          left: -320,
-          behavior: 'smooth'
-        });
-      },
-      scrollRight() {
-        this.$refs.carousel.scrollBy({
-          left: 320,
-          behavior: 'smooth'
-        });
-      }
+export default {
+  name: 'ProductList',
+  props: ['products'],
+  components: {
+    ProductCard
+  },
+  methods: {
+    addToCart({ productId, quantity }) {
+      this.$emit('addToCart', {
+        productId: productId,
+        quantity: quantity
+      })
     }
   }
+}
 </script>
 
 <style scoped>
-.product-carousel-container {
+.product-list-container {
   max-width: 100%;
+  box-sizing: border-box; 
 }
 
-.carousel-header {
+.list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  padding: 0 10px; 
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
 }
 
-.carousel-controls {
-  display: flex;
-  gap: 10px;
+.list-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
-.nav-btn {
-  background-color: #0046be;
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
+.product-count {
+  color: #666;
+  font-weight: bold;
 }
 
-.nav-btn:hover {
-  background-color: #002a75;
-}
-
-.carousel-track {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px; 
   align-items: stretch;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  padding: 20px 10px 40px 10px; 
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
-.carousel-track::-webkit-scrollbar {
-  display: none;
+.grid-item {
+  height: 100%;
 }
 
-.carousel-item {
-  flex: 0 0 300px;
-  width: 300px;
-  min-width: 300px;
-  max-width: 300px;
-  box-sizing: border-box;
-  scroll-snap-align: start;
-  display: flex;    
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
