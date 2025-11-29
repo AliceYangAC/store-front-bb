@@ -99,6 +99,9 @@ export default {
   flex-direction: column;
   background: white;
   justify-content: space-between;
+  width: 100%;   
+  box-sizing: border-box;  
+  overflow: hidden;
 }
 
 img {

@@ -111,7 +111,7 @@
   width: 300px;
   min-width: 300px;
   max-width: 300px;
-  
+  box-sizing: border-box;
   scroll-snap-align: start;
   display: flex;    
 }
