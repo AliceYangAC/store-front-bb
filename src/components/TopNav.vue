@@ -40,7 +40,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: #0046BE;
   color: #fff;
   padding-top: 0.5rem;
   padding-left: 1rem;
@@ -60,7 +60,7 @@ nav img {
 .nav-links {
   display: flex;
   list-style: none;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 

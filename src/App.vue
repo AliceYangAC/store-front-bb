@@ -108,9 +108,11 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
 body {
   /* background-image: url('@/assets/algonquin.jpg'); */
-  background-color: #0046BE;
+  background-color: white;;
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Keeps the background in place when scrolling */
@@ -119,7 +121,8 @@ body {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
