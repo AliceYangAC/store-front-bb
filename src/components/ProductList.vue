@@ -58,7 +58,6 @@
 .product-carousel-container {
   padding: 10px;
   max-width: 100%;
-  overflow: hidden;
 }
 
 .carousel-header {
@@ -74,7 +73,7 @@
 }
 
 .nav-btn {
-  background-color: #0046be; /* Best Buy Blue */
+  background-color: #0046be;
   color: white;
   border: none;
   width: 40px;
@@ -92,29 +91,27 @@
   background-color: #002a75;
 }
 
-/* The magic happening here */
 .carousel-track {
   display: flex;
   gap: 20px;
-  overflow-x: auto; /* Enable horizontal scrolling */
+  align-items: stretch; 
+  overflow-x: auto;
   scroll-behavior: smooth;
-  scroll-snap-type: x mandatory; /* Forces items to snap into place */
-  padding-bottom: 20px; /* Space for scrollbar if visible */
-  
-  /* Hide scrollbar for clean look in Webkit browsers (Chrome/Safari) */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  scroll-snap-type: x mandatory;
+  padding: 10px 5px 30px 5px; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
 .carousel-track::-webkit-scrollbar {
   display: none;
 }
 
 .carousel-item {
-  /* Prevent items from shrinking */
   flex: 0 0 auto;
-  width: 300px; /* Fixed width for each card */
-  scroll-snap-align: start; /* Snap to the left edge */
+  width: 300px;
+  scroll-snap-align: start;
+  height: auto; 
+  display: flex; 
 }
 </style>
