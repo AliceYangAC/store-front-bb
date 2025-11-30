@@ -256,4 +256,8 @@ button {
   flex: 1; 
   min-width: 0; 
 }
+
+.sidebar ul {
+  flex-direction: column; 
+}
 </style>
