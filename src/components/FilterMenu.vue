@@ -31,7 +31,7 @@
         </div>
       </div>
       
-      <div class="range-container">
+      <!-- <div class="range-container">
         <input 
           type="range" 
           v-model.number="maxPrice" 
@@ -41,7 +41,7 @@
           step="50"
           class="slider"
         >
-      </div>
+      </div> -->
     </div>
 
   </div>
@@ -149,6 +149,7 @@ button {
 button:hover {
   background-color: #f0f0f0;
   text-decoration: none;
+  color:#0046be;
 }
 
 li.active button {
@@ -156,6 +157,11 @@ li.active button {
   color: white;
   font-weight: bold;
 }
+
+li.active button:hover{
+  color: #FFF007
+}
+
 
 /* Price Section Styles */
 .price-inputs {

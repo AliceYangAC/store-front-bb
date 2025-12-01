@@ -86,9 +86,13 @@ nav img {
   font-weight: bold;
 }
 
-/* FIX: Ensure anchor links inside the list items are white */
 .nav-links li a {
   color: white; 
+  text-decoration: none;
+}
+
+.nav-links li a:hover {
+  color: #FFF007; 
   text-decoration: none;
 }
 
