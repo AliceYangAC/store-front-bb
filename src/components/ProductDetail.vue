@@ -110,7 +110,8 @@ export default {
 .detail-container {
   display: flex;
   flex-wrap: wrap; 
-  max-width: 1200px;
+  width: 100%;
+  /* max-width: 1200px; */
   /* margin: 15px auto; */
   padding: 0 20px;
   gap: 40px;
