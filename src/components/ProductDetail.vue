@@ -1,6 +1,5 @@
 <template>
   <div class="detail-container" v-if="productExists">
-    
     <div class="image-column">
       <div class="square-image-wrapper">
         <img :src="productImageUrl" :alt="product.name" />
@@ -42,14 +41,14 @@
         </div>
       </div>
       <br /><br />
-      <div class="rec-section-wrapper" v-if="productExists">
+    </div>
+          <div class="rec-section-wrapper" v-if="productExists">
         <ProductRec 
           :currentProductId="product.id" 
           :allProducts="products"
           @addToCart="addToCartFromRec" 
         />
       </div>
-    </div>
   </div>
 
   <div class="not-found" v-else>
