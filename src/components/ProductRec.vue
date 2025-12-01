@@ -57,26 +57,28 @@ export default {
   methods: {
     async fetchRecommendations() {
       if (!this.currentProductId) return;
+      
+      console.log(`Fetching recommendations for Product ID: ${this.currentProductId}`);
 
       try {
-        // Call Order Service (Assumed mapped via proxy or env var)
-        // Ensure your VUE_APP_ORDER_SERVICE_URL is set correctly in App.vue logic
-        // For local dev, direct fetch to port 3005:
         const response = await fetch(`http://localhost:3005/recommendations/${this.currentProductId}`);
         
         if (response.ok) {
           const recommendedIds = await response.json();
-          
-          // Map IDs back to full product objects from your catalog
+          console.log("Recommended IDs from Backend:", recommendedIds);
+
           this.recommendations = recommendedIds
             .map(id => this.allProducts.find(p => p.id == id))
-            .filter(p => p); // Filter out undefined if ID not found
+            .filter(p => p);
+            
+          console.log("Final Product Objects:", this.recommendations);
         } else {
+            console.error("Backend returned error:", response.status);
             this.recommendations = [];
         }
       } catch (e) {
-        console.error("Failed to load recommendations", e);
-        this.recommendations = []; // Handle error gracefully (hide section)
+        console.error("Fetch failed:", e);
+        this.recommendations = [];
       }
     }
   }
