@@ -20,13 +20,21 @@
             <td class="td-product">
               <div class="product-wrapper">
                 <img :src="getImageUrl(item.product)" :alt="item.product.name" class="cart-thumb" />
-                <div class="product-name">{{ item.product.name }}</div>
+                <router-link :to="`/product/${item.product.id}`" class="product-name">{{ item.product.name }}</router-link>
               </div>
             </td>
 
             <td class="td-price">${{ item.product.price }}</td>
 
-            <td class="td-quantity">{{ item.quantity }}</td>
+            <td class="td-quantity">
+              <input 
+                type="number" 
+                v-model.number="item.quantity" 
+                min="1" 
+                class="quantity-input" 
+                @change="validateQuantity(item)"
+              />
+            </td>
 
             <td class="td-total">${{ getItemTotal(item) }}</td>
 
@@ -84,6 +92,11 @@ export default {
       const index = this.cartItems.indexOf(item)
       if (index > -1) {
         this.$emit('removeFromCart', index)
+      }
+    },
+    validateQuantity(item) {
+      if (item.quantity < 1 || !item.quantity) {
+        item.quantity = 1;
       }
     },
     submitOrder() {
@@ -245,6 +258,15 @@ td {
 .continue-btn {
   margin-top: 20px;
   padding: 10px 25px;
+}
+
+.quantity-input {
+  width: 60px;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 /* Responsive */
