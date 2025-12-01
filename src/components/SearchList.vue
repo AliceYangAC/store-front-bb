@@ -1,14 +1,18 @@
 <template>
   <div class="search-results-container">
+    
     <div class="list-header">
-      
-      <router-link to="/" class="back-link">
-        <button class="button">← Back to All Products</button>
-      </router-link>
+      <h2 class="main-heading">Search Results for "{{ currentSearchQuery }}"</h2>
 
-      <div class="search-info-group">
-        <h2>Search Results for "{{ currentSearchQuery }}"</h2>
-        <span class="product-count">{{ filteredResults.length }} items</span>
+      <div class="header-content">
+        
+        <router-link to="/" class="back-link">
+          <button class="button">← Back to All Products</button>
+        </router-link>
+
+        <div class="search-info-group">
+          <span class="product-count">{{ filteredResults.length }} items</span>
+        </div>
       </div>
 
     </div>

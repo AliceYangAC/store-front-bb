@@ -146,18 +146,10 @@ h2 {
   font-size: 0.9rem;
 }
 
-/* button {
+button {
   flex: 1;
   padding: 6px;
   font-size: 0.9rem;
-  background-color: #0046be;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
-button:hover {
-  background-color: #335da4;
-} */
 </style>
