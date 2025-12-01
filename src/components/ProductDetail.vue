@@ -44,7 +44,13 @@
 
     </div>
   </div>
-
+  <div class="rec-section-wrapper" v-if="productExists">
+    <ProductRec 
+      :currentProductId="product.id" 
+      :allProducts="products"
+      @addToCart="addToCartFromRec" 
+    />
+  </div>
   <div class="not-found" v-else>
     <img src="../assets/404.jpg" alt="Product not found" />
     <h3>Oops! That product was not found...</h3>
@@ -52,8 +58,10 @@
 </template>
 
 <script>
+import ProductRec from '../components/ProductRec.vue'
 export default {
   name: 'ProductDetail',
+  components: { ProductRec },
   props: ['products'],
   data() {
     return {
@@ -89,6 +97,9 @@ export default {
         productId: this.product.id,
         quantity: this.quantity
       })
+    },
+    addToCartFromRec(payload) {
+      this.$emit('addToCart', payload);
     },
     searchCategory(category) {
       this.$router.push({ path: '/search', query: { q: category } });
@@ -256,6 +267,12 @@ export default {
     aspect-ratio: 1 / 1;
     max-width: 500px;
   }
+}
+
+.rec-section-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 40px 20px;
 }
 
 .not-found {
