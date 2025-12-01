@@ -112,7 +112,7 @@ export default {
   flex-wrap: wrap; 
   width: 100%;
   /* max-width: 1200px; */
-  /* margin: 15px auto; */
+  margin: 15px auto;
   padding: 0 20px;
   gap: 40px;
   align-items: flex-start;
