@@ -7,7 +7,7 @@ const routes = [
   { path: "/", component: ProductList },
   { path: "/product/:id", component: ProductDetail },
   { path: "/cart", component: ShoppingCart },
-  { path: '/search', component: SearchList },
+  { path: '/search', name: 'Search', component: SearchList },
 ];
 
 const router = createRouter({
