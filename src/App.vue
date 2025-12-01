@@ -14,7 +14,7 @@
 
     <main class="content" :class="{ 'full-width': $route.path !== '/' }">
       <router-view
-        :products="filteredProducts"
+        :products="productsForView" 
         :cartItems="cartItems"
         @addToCart="addToCart"
         @removeFromCart="removeFromCart"
@@ -59,6 +59,12 @@ export default {
 
         return matchesCategory && matchesPrice;
       });
+    },
+    productsForView() {
+      if (this.$route.path === '/') {
+        return this.filteredProducts;
+      }
+      return this.products;
     }
   },
   mounted() {
@@ -135,7 +141,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: black;
+  color: #2c3e50;
   margin-top: 120px;
 }
 
@@ -163,6 +169,10 @@ body {
 .content.full-width {
   flex: 0 0 100%; 
   max-width: 100%;
+}
+
+.sidebar ul {
+  flex-direction: column; 
 }
 
 @media (max-width: 768px) {
@@ -208,7 +218,7 @@ li {
 
 button {
   padding: 10px;
-  background-color: #0046BE;
+  background-color: #005f8b;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -227,33 +237,5 @@ button:hover {
   border-radius: 5px;
   padding: 5px;
   margin-right: 10px;
-}
-.content.full-width {
-  flex: 0 0 100%; 
-  max-width: 100%;
-}
-.main-container {
-  display: flex;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-.sidebar {
-  flex: 0 0 25%;
-  max-width: 300px; 
-  position: sticky;
-  top: 140px; 
-}
-
-.content {
-  flex: 1; 
-  min-width: 0; 
-}
-
-.sidebar ul {
-  flex-direction: column; 
 }
 </style>
