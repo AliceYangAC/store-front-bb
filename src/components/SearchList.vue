@@ -1,17 +1,17 @@
 <template>
   <div class="search-results-container">
     
-    <div class="list-header">
-      <h2 class="main-heading">Search Results for "{{ currentSearchQuery }}"</h2>
+    <router-link to="/" class="back-link-margin">
+      ← Back to All Products
+    </router-link>
 
-      <div class="action-row"> 
+    <div class="list-header">
+      <div class="header-content">
         
-        <router-link to="/" class="back-link">
-          <button class="button">← Back to All Products</button>
-        </router-link>
+        <h2 class="main-heading">Search Results for "{{ currentSearchQuery }}"</h2>
 
         <span class="product-count">{{ filteredResults.length }} items</span>
-
+        
       </div>
     </div>
 
@@ -78,33 +78,40 @@ export default {
     padding: 0 20px;
 }
 
+.back-link-margin {
+    display: block; 
+    text-align: left;
+    margin-bottom: 20px;
+    color: #0046BE;
+    text-decoration: underline;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
 .list-header {
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
 }
 
-.action-row {
+.header-content {
     display: flex;
     justify-content: space-between; 
-    align-items: center;
-    margin-top: 10px; 
+    align-items: baseline;
+    margin-top: 10px;
 }
 
 .main-heading {
-    margin-top: 0;
-    margin-bottom: 0; 
-    font-size: 1.8rem; 
+    margin: 0;
+    font-size: 1.5rem; 
     text-align: left;
-}
-
-.back-link {
-    flex-shrink: 0; 
+    flex-shrink: 1;
 }
 
 .product-count {
     color: #666; 
     font-weight: bold;
+    flex-shrink: 0;
 }
 
 .product-grid {

@@ -135,7 +135,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #0046BE;
+  color: black;
   margin-top: 120px;
 }
 
@@ -216,7 +216,7 @@ button {
   height: 42px;
 }
 
-.button:focus {
+button:hover {
  color: #FFF007;
 }
 
