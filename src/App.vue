@@ -7,7 +7,7 @@
       <FilterMenu 
         :categories="uniqueCategories" 
         :selectedCategory="currentCategory"
-        @filterUpdate="updateCategory"
+        :maxPriceLimit="highestProductPrice"  @filterUpdate="updateCategory"
         @priceUpdate="updatePrice" 
       />
     </aside>
@@ -50,6 +50,10 @@ export default {
     uniqueCategories() {
       const categories = this.products.map(p => p.category).filter(c => c);
       return [...new Set(categories)].sort();
+    },
+    highestProductPrice() {
+      if (this.products.length === 0) return 9999;
+      return Math.ceil(Math.max(...this.products.map(p => parseFloat(p.price))));
     },
     filteredProducts() {
       return this.products.filter(p => {
@@ -218,7 +222,7 @@ li {
 
 button {
   padding: 10px;
-  background-color: #005f8b;
+  background-color: #0046BE;
   color: #fff;
   border: none;
   border-radius: 5px;
