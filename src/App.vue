@@ -1,5 +1,5 @@
 <template>
-  <TopNav :cartItemCount="cartItemCount"/>
+  <TopNav :cartItemCount="cartItemCount" :products="products"/>
   
   <div class="main-container">
     

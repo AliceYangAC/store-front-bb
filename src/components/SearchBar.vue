@@ -1,36 +1,28 @@
 <template>
   <div class="search-container">
-    <AutoComplete
-      v-model="searchTerm"
-      :suggestions="suggestions"
-      @complete="searchProducts"
-      @item-select="goToProductPage"
-      @keyup.enter="selectFirstSuggestion"
-      placeholder="Search Best Buy"
-      :dropdown="false"
-      :forceSelection="false"
-      field="name"
-      class="p-autocomplete-custom p-inputgroup"
-    >
-      <template #inputgroupappend>
-        <button class="search-btn" @click="selectFirstSuggestion" aria-label="Search">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
-          </svg>
-        </button>
-      </template>
-    </AutoComplete>
-  </div>
+    <div class="search-input-wrapper">
+      <input 
+        type="search"
+        v-model="searchTerm"
+        @input="handleSearch" 
+        placeholder="Search Best Buy"
+        class="search-input"
+      />
+      <button class="search-btn" @click="selectFirstSuggestion" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+    
+    </div>
 </template>
 
 <script>
-import AutoComplete from 'primevue/autocomplete';
+import { useDebounceFn } from '@vueuse/core';
 
 export default {
   name: 'SearchBar',
-  components: {
-    AutoComplete
-  },
   props: {
     products: {
       type: Array,
@@ -44,9 +36,12 @@ export default {
       suggestions: []
     };
   },
+  created() {
+    this.handleSearch = useDebounceFn(this.triggerFilter, 300);
+  },
   methods: {
-    searchProducts(event) {
-      const query = event.query ? event.query.toLowerCase() : '';
+    triggerFilter() {
+      const query = this.searchTerm ? this.searchTerm.toLowerCase() : '';
 
       if (!query.trim()) {
         this.suggestions = [];
@@ -72,46 +67,50 @@ export default {
 };
 </script>
 
-<style>
-.p-autocomplete-custom .p-inputgroup {
-    border-radius: 4px;
-    overflow: visible;
-    display: flex;
+<style scoped>
+.search-container {
+  position: relative;
+  width: 100%;
 }
 
-.p-autocomplete-custom .p-inputtext {
-    border-radius: 4px !important; 
-    padding-right: 40px !important; 
-    border: 1px solid #0046BE !important; 
-    box-shadow: none !important;
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px; 
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.search-input {
+  flex-grow: 1;
+  border: none;
+  padding: 10px 45px 10px 15px; 
+  font-size: 1rem;
+  outline: none;
+  background-color: transparent;
+  color: #333;
 }
 
 .search-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333; 
-    position: absolute;
-    right: 0; 
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0 10px;
-    z-index: 5; 
-    height: 100%; 
-    display: flex;
-    align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333; 
+  position: absolute;
+  right: 0; 
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 10px;
+  z-index: 5; 
 }
 
 .search-btn svg {
-    color: #333;
-    fill: currentColor;
+  color: #333;
+  fill: currentColor;
 }
 
 .search-btn:hover svg {
-    color: #0046BE; 
-}
-
-.p-autocomplete-custom .p-inputgroup-addon {
-    display: none !important; 
+  color: #0046BE; 
 }
 </style>
