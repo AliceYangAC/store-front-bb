@@ -89,14 +89,13 @@ export default {
     text-align: left;
     margin-bottom: 20px;
     color: #0046BE;
-    text-decoration: underline;
     font-size: 1rem;
     font-weight: bold;
 }
 
 .back-link-margin:hover {
     color: #002a80;
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 .list-header {

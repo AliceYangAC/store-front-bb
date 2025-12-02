@@ -268,7 +268,7 @@ button {
 }
 
 button:hover {
- color: #FFF007;
+ color: #ffe007;
 }
 
 .quantity-input {

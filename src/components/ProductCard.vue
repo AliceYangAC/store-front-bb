@@ -29,7 +29,7 @@ export default {
     }
   },
   computed: {
-    // 1. Logic to handle image URLs (Backend vs External)
+    // Logic to handle image URLs (Backend vs External)
     productImageUrl() {
       // Placeholder check
       if (this.product.image === '/placeholder.png') return this.product.image;
