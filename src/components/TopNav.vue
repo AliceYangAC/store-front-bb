@@ -82,8 +82,8 @@ nav img {
   flex-shrink: 0; 
   display: flex;
   list-style: none;
-  font-size: 1.2rem;
-  font-weight: bold;
+  /* font-size: 1.2rem;
+  font-weight: bold; */
 }
 
 .nav-links li a {
