@@ -9,7 +9,7 @@
     <div class="info-column">
       <div class="product-header">
         <h1>{{ product.name }}</h1>
-        
+        <h2>{{ product.brand }}</h2>
         <div class="meta-row">
           <span class="sku-label">Code: {{ product.id }}</span>
           

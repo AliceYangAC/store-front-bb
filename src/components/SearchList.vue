@@ -95,7 +95,7 @@ export default {
 
 .back-link-margin:hover {
     color: #002a80;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .list-header {

@@ -293,7 +293,6 @@ export default {
   flex: 1;
 }
 
-/* Payment Options */
 .payment-options {
   display: flex;
   gap: 15px;
@@ -343,6 +342,7 @@ td { padding: 20px 10px; border-bottom: 1px solid #f4f4f4; vertical-align: middl
 .product-wrapper { display: flex; align-items: center; gap: 20px; }
 .cart-thumb { width: 60px; height: 60px; object-fit: contain; border: 1px solid #eee; border-radius: 4px; padding: 5px; }
 .product-name { font-weight: 500; color: #0046be; }
+.product-name:hover { text-decoration: none; color: #002a80;}
 .remove-btn { background: none; border: none; color: #cc0000; font-size: 1.5rem; cursor: pointer; padding: 0 10px; opacity: 0.6; }
 .remove-btn:hover { opacity: 1; }
 .cart-summary { display: flex; flex-direction: column; align-items: flex-end; border-top: 2px solid #eee; padding-top: 20px; }
