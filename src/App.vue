@@ -72,7 +72,8 @@ export default {
     }
   },
   mounted() {
-    this.getProducts()
+    this.getProducts();
+    document.title = "Best Buy: Shop Online For Deals & Save | Best Buy Canada";
   },
   methods: {
     updateCategory(category) {
