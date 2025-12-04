@@ -1,6 +1,12 @@
 <template>
   <div class="product-card">
-    <img :src="productImageUrl" alt="Product Image">
+    <div class="image-wrapper">
+      <img 
+        :src="productImageUrl" 
+        alt="Product Image"
+        @error="handleImageError"
+      >
+    </div>
     <router-link :to="`/product/${product.id}`">
       <h2>{{ product.name }}</h2>
     </router-link>
@@ -29,27 +35,11 @@ export default {
     }
   },
   computed: {
-    // Logic to handle image URLs (Backend vs External)
     productImageUrl() {
-      // Placeholder check
-      if (this.product.image === '/placeholder.png') return this.product.image;
-      
-      // Full URL check (e.g. Google or AI generated)
-      if (this.product.image && this.product.image.startsWith('http')) {
-        return this.product.image;
-      }
-
-      // Backend Proxy Logic (Connects to Port 3002)
-      let baseUrl = process.env.VUE_APP_PRODUCT_SERVICE_URL || 'http://localhost:3002';
-      
-      if (baseUrl.endsWith('/') && this.product.image.startsWith('/')) {
-        baseUrl = baseUrl.slice(0, -1);
-      }
-      
-      return `${baseUrl}${this.product.image}`;
+      if (!this.product.id) return '/placeholder.png';
+      // Direct ID mapping to the backend route
+      return `/products/${this.product.id}/image`;
     },
-
-    // 2. Logic to shorten description without cutting off sentences
     shortDescription() {
       const text = this.product.description;
       const maxLength = 100; 
@@ -57,27 +47,17 @@ export default {
       if (!text) return '';
       if (text.length <= maxLength) return text;
 
-      // Cut at limit
       let trimmed = text.substr(0, maxLength);
-
-      // Try to cut at the last period to keep a full sentence
       const lastPeriod = trimmed.lastIndexOf('.');
       if (lastPeriod > 0) {
         return trimmed.substring(0, lastPeriod + 1);
       }
-
-      // Fallback: Cut at the last space
       return trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(" ")));
     }
   },
   methods: {
-    incrementQuantity() {
-      this.quantity++
-    },
-    decrementQuantity() {
-      if (this.quantity > 1) {
-        this.quantity--
-      }
+    handleImageError(e) {
+        e.target.src = '/placeholder.png';
     },
     addToCart() {
       this.$emit('addToCart', {
@@ -105,15 +85,23 @@ export default {
 }
 
 .product-card a {
-    color: #333; /* Dark gray/black for readability on white background */
+    color: #333; 
     text-decoration: none; 
 }
 
+/* Added wrapper to keep images consistent size */
+.image-wrapper {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
 img {
-  width: 100%;
-  height: 120px;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
-  margin-bottom: 5px;
 }
 
 h2 {
@@ -155,5 +143,4 @@ button {
   padding: 6px;
   font-size: 0.9rem;
 }
-
 </style>

@@ -2,7 +2,11 @@
   <div class="detail-container" v-if="productExists">
     <div class="image-column">
       <div class="square-image-wrapper">
-        <img :src="productImageUrl" :alt="product.name" />
+        <img 
+            :src="productImageUrl" 
+            :alt="product.name" 
+            @error="handleImageError"
+        />
       </div>
     </div>
 
@@ -80,22 +84,15 @@ export default {
       return !!this.product;
     },
     productImageUrl() {
-      if (this.product.image === '/placeholder.png') return this.product.image;
-      
-      if (this.product.image.startsWith('http')) {
-        return this.product.image;
-      }
-
-      let baseUrl = process.env.VUE_APP_PRODUCT_SERVICE_URL || 'http://localhost:3002';
-
-      if (baseUrl.endsWith('/') && this.product.image.startsWith('/')) {
-        baseUrl = baseUrl.slice(0, -1);
-      }
-
-      return `${baseUrl}${this.product.image}`;
+      if (!this.product || !this.product.id) return '/placeholder.png';
+      // Direct ID mapping
+      return `/products/${this.product.id}/image`;
     }
   },
   methods: {
+    handleImageError(e) {
+        e.target.src = '/placeholder.png';
+    },
     addToCart() {
       this.$emit('addToCart', {
         productId: this.product.id,
@@ -113,6 +110,7 @@ export default {
 </script>
 
 <style scoped>
+/* (Your CSS remains exactly the same as provided) */
 .detail-container {
   display: flex;
   flex-wrap: wrap; 
