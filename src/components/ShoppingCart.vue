@@ -1,47 +1,50 @@
 <template>
   <div class="cart-container">
     
-    <div v-if="hasCartItems">
+    <div v-if="hasCartItems" class="cart-content-wrapper">
       <h1 class="cart-title">
         {{ isCheckoutMode ? 'Checkout' : 'Your Cart' }}
       </h1>
 
-      <div v-if="!isCheckoutMode">
-        <table class="cart-table">
-          <thead>
-            <tr>
-              <th class="th-product">Product</th>
-              <th class="th-price">Price</th>
-              <th class="th-quantity">Quantity</th>
-              <th class="th-total">Total</th>
-              <th class="th-action"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in cartItems" :key="item.product.id">
-              <td class="td-product">
-                <div class="product-wrapper">
-                  <img :src="getImageUrl(item.product)" :alt="item.product.name" class="cart-thumb" />
-                  <router-link :to="`/product/${item.product.id}`" class="product-name">{{ item.product.name }}</router-link>
-                </div>
-              </td>
-              <td class="td-price">${{ item.product.price }}</td>
-              <td class="td-quantity">
-                <input 
-                  type="number" 
-                  v-model.number="item.quantity" 
-                  min="1" 
-                  class="quantity-input" 
-                  @change="validateQuantity(item)"
-                />
-              </td>
-              <td class="td-total">${{ getItemTotal(item) }}</td>
-              <td class="td-action">
-                <button class="remove-btn" @click="removeFromCart(item)" title="Remove Item">&times;</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div v-if="!isCheckoutMode" class="cart-view">
+        
+        <div class="cart-items-scroll">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th class="th-product sticky-header">Product</th>
+                <th class="th-price sticky-header">Price</th>
+                <th class="th-quantity sticky-header">Quantity</th>
+                <th class="th-total sticky-header">Total</th>
+                <th class="th-action sticky-header"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in cartItems" :key="item.product.id">
+                <td class="td-product">
+                  <div class="product-wrapper">
+                    <img :src="getImageUrl(item.product)" :alt="item.product.name" class="cart-thumb" />
+                    <router-link :to="`/product/${item.product.id}`" class="product-name">{{ item.product.name }}</router-link>
+                  </div>
+                </td>
+                <td class="td-price">${{ item.product.price }}</td>
+                <td class="td-quantity">
+                  <input 
+                    type="number" 
+                    v-model.number="item.quantity" 
+                    min="1" 
+                    class="quantity-input" 
+                    @change="validateQuantity(item)"
+                  />
+                </td>
+                <td class="td-total">${{ getItemTotal(item) }}</td>
+                <td class="td-action">
+                  <button class="remove-btn" @click="removeFromCart(item)" title="Remove Item">&times;</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class="cart-summary">
           <div class="summary-row">
@@ -54,70 +57,72 @@
 
       <div v-else class="checkout-form">
         
-        <div class="form-section">
-          <h3>Shipping Address</h3>
-          
-          <div class="form-group">
-            <label>Address Line 1</label>
-            <input v-model="shipping.address1" type="text" placeholder="123 Maple Street" required />
-          </div>
-
-          <div class="form-group">
-            <label>Address Line 2 (Optional)</label>
-            <input v-model="shipping.address2" type="text" placeholder="Apt 4B" />
-          </div>
-
-          <div class="form-row">
-            <div class="form-group half">
-              <label>City</label>
-              <input v-model="shipping.city" type="text" placeholder="Ottawa" required />
-            </div>
+        <div class="scroll-form">
+            <div class="form-section">
+            <h3>Shipping Address</h3>
             
-            <div class="form-group half">
-              <label>Country</label>
-              <select v-model="shipping.country" disabled>
-                <option value="Canada">Canada</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group half">
-              <label>Province</label>
-              <select v-model="shipping.province">
-                <option v-for="prov in provinces" :key="prov" :value="prov">{{ prov }}</option>
-              </select>
+            <div class="form-group">
+                <label>Address Line 1</label>
+                <input v-model="shipping.address1" type="text" placeholder="123 Maple Street" required />
             </div>
 
-            <div class="form-group half">
-              <label>Postal Code</label>
-              <input 
-                v-model="shipping.postalCode" 
-                type="text" 
-                placeholder="K1A 0B1" 
-                maxlength="7"
-                @input="formatPostalCode"
-              />
+            <div class="form-group">
+                <label>Address Line 2 (Optional)</label>
+                <input v-model="shipping.address2" type="text" placeholder="Apt 4B" />
             </div>
-          </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                <label>City</label>
+                <input v-model="shipping.city" type="text" placeholder="Ottawa" required />
+                </div>
+                
+                <div class="form-group half">
+                <label>Country</label>
+                <select v-model="shipping.country" disabled>
+                    <option value="Canada">Canada</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                <label>Province</label>
+                <select v-model="shipping.province">
+                    <option v-for="prov in provinces" :key="prov" :value="prov">{{ prov }}</option>
+                </select>
+                </div>
+
+                <div class="form-group half">
+                <label>Postal Code</label>
+                <input 
+                    v-model="shipping.postalCode" 
+                    type="text" 
+                    placeholder="K1A 0B1" 
+                    maxlength="7"
+                    @input="formatPostalCode"
+                />
+                </div>
+            </div>
+            </div>
+
+            <div class="form-section">
+            <h3>Payment Method</h3>
+            <div class="payment-options">
+                <label :class="{ active: payment.paymentType === 'VISA' }">
+                <input type="radio" value="VISA" v-model="payment.paymentType"> VISA
+                </label>
+                <label :class="{ active: payment.paymentType === 'MASTERCARD' }">
+                <input type="radio" value="MASTERCARD" v-model="payment.paymentType"> Mastercard
+                </label>
+                <label :class="{ active: payment.paymentType === 'AMEX' }">
+                <input type="radio" value="AMEX" v-model="payment.paymentType"> AMEX
+                </label>
+            </div>
+            </div>
         </div>
 
-        <div class="form-section">
-          <h3>Payment Method</h3>
-          <div class="payment-options">
-            <label :class="{ active: payment.paymentType === 'VISA' }">
-              <input type="radio" value="VISA" v-model="payment.paymentType"> VISA
-            </label>
-            <label :class="{ active: payment.paymentType === 'MASTERCARD' }">
-              <input type="radio" value="MASTERCARD" v-model="payment.paymentType"> Mastercard
-            </label>
-            <label :class="{ active: payment.paymentType === 'AMEX' }">
-              <input type="radio" value="AMEX" v-model="payment.paymentType"> AMEX
-            </label>
-          </div>
-        </div>
-
-        <div class="cart-summary">
+        <div class="cart-summary sticky-footer">
            <div class="summary-row">
             <span>Total to Pay</span>
             <span class="grand-total">${{ cartTotal }}</span>
@@ -156,7 +161,7 @@ export default {
         address1: '',
         address2: '',
         city: '',
-        country: 'Canada', // Default and fixed
+        country: 'Canada', 
         province: 'ON',
         postalCode: ''
       },
@@ -212,14 +217,10 @@ export default {
 
       this.$emit('submitOrder', orderPayload);
     },
+    // FIX: Using ID-based URL construction
     getImageUrl(product) {
-      if (!product.image || product.image === '/placeholder.png') return '/placeholder.png';
-      if (product.image.startsWith('http')) return product.image;
-      let baseUrl = process.env.VUE_APP_PRODUCT_SERVICE_URL || 'http://localhost:3002';
-      if (baseUrl.endsWith('/') && product.image.startsWith('/')) {
-        baseUrl = baseUrl.slice(0, -1);
-      }
-      return `${baseUrl}${product.image}`;
+      if (!product || !product.id) return '/placeholder.png';
+      return `/products/${product.id}/image`;
     }
   }
 }
@@ -233,6 +234,25 @@ export default {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  /* Set a max height for the whole container relative to viewport */
+  max-height: 80vh; 
+  overflow: hidden; /* Hide overflow on the main container */
+}
+
+.cart-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.cart-view, .checkout-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
 }
 
 .cart-title {
@@ -241,10 +261,29 @@ export default {
   border-bottom: 1px solid #eee;
   padding-bottom: 15px;
   color: #111;
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 
-.checkout-form {
-  text-align: left;
+/* SCROLLABLE AREAS */
+.cart-items-scroll {
+    overflow-y: auto;
+    flex-grow: 1; /* Take up available space */
+    border-bottom: 1px solid #eee;
+}
+
+.scroll-form {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+/* STICKY HEADER FOR TABLE */
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+    box-shadow: 0 1px 0 #eee; /* subtle border line */
 }
 
 .form-section {
@@ -331,8 +370,8 @@ export default {
   color: #333;
 }
 
-.cart-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-th { text-align: left; padding: 15px 10px; color: #666; font-weight: 600; border-bottom: 2px solid #eee; }
+.cart-table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 15px 10px; color: #666; font-weight: 600; }
 td { padding: 20px 10px; border-bottom: 1px solid #f4f4f4; vertical-align: middle; }
 .th-product { width: 50%; }
 .th-price, .th-quantity, .th-total { width: 15%; text-align: right; }
@@ -345,7 +384,18 @@ td { padding: 20px 10px; border-bottom: 1px solid #f4f4f4; vertical-align: middl
 .product-name:hover { text-decoration: none; color: #002a80;}
 .remove-btn { background: none; border: none; color: #cc0000; font-size: 1.5rem; cursor: pointer; padding: 0 10px; opacity: 0.6; }
 .remove-btn:hover { opacity: 1; }
-.cart-summary { display: flex; flex-direction: column; align-items: flex-end; border-top: 2px solid #eee; padding-top: 20px; }
+
+.cart-summary { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-end; 
+    border-top: 2px solid #eee; 
+    padding-top: 20px; 
+    margin-top: auto; /* Push to bottom */
+    flex-shrink: 0;
+    background: white; /* Ensure opaque background if content scrolls under */
+}
+
 .summary-row { display: flex; gap: 40px; margin-bottom: 20px; font-size: 1.2rem; }
 .grand-total { font-weight: bold; font-size: 1.4rem; }
 .checkout-button { padding: 12px 40px; background-color: #FFF007; color: black; font-weight: bold; font-size: 1.1rem; border: none; border-radius: 4px; cursor: pointer; }
